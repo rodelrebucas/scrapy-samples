@@ -1,10 +1,7 @@
 # -*- coding: utf-8 -*-
 
-# a standalone spider
-# generated with:
-#   $scrapy genspider spider_name domain_name
-# run with:
-#   $scrapy runspider spider_name 
+# Using Spider Class
+
 import scrapy
 
 
