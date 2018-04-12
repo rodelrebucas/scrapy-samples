@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 
 # Using a generic spider
+# Extract and follow external links as long as it follow the Rule specified
+
 
 import scrapy
 from scrapy.spiders import CrawlSpider, Rule
@@ -14,8 +16,12 @@ class QuotesSpider(CrawlSpider):
     login_url = ['http://quotes.toscrape.com/login']
     start_urls = ['http://quotes.toscrape.com']
     rules = [
-        Rule(LxmlLinkExtractor(allow=(r'http://goodreads.com/author/show/\d+[\w\.]+')), callback='parse_goodreads_author'),
-        Rule(LxmlLinkExtractor(allow=(r'/author/[\w\.]+')), callback='parse_quotes_author')
+        Rule(LxmlLinkExtractor(allow=(), process_value='external'), callback='parse_goodreads_author'),
+        # for every response extract this pattern
+        # if this link is extracted, should we follow again and proceed with parsing the next response? True
+        # Rule(LxmlLinkExtractor(allow=(), restrict_xpaths=('//li[@class="next"]')), follow=True), 
+        # for every response extract this link pattern
+        # Rule(LxmlLinkExtractor(allow=(r'/author/[\w\.]+')), callback='parse_quotes_author')
     ]
 
 
@@ -40,9 +46,17 @@ class QuotesSpider(CrawlSpider):
             # to start processing start_urls 
         )
 
+    def external(value):
+        self.logger.info('***** -->> %s' % value)
+        
 
     def parse_goodreads_author(self, response):
         
+        self.logger.info('********************')
+
+        for link in LxmlLinkExtractor(allow=(r'http://goodreads.com/author/show/\d+\.[\w\_]+'),deny = self.allowed_domains).extract_links(response):
+            self.logger.info('********** %s' % link.url)
+
         author_name = response.xpath('//h1[@class="authorName"]/span/text()').extract_first()        
         yield {
             'author_name_goodreads': author_name
