@@ -27,9 +27,12 @@ scrapy crawl <spider_name>
     $./<your virtualenv>/bin/activate
 ```
 
-2. Run spider for supported media
-    
-```$scrapy crawl <spider name>```
+2. Install scrapy and other requirements
+
+3. Run spider for supported media
+```
+    $scrapy crawl <spider name>
+```
 
 ## Running the tests
 
@@ -82,8 +85,7 @@ Please read CONTRIBUTING.md for details.
 
 ## Versioning
 
-We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository]
-(https://github.com/rodelrebucas/scrapy-samples). 
+We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/rodelrebucas/scrapy-samples). 
 
 ## Authors
 
