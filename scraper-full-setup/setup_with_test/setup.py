@@ -1,7 +1,4 @@
 #!/usr/bin/env python
-# author          :Kysha Faye Nacua
-# version         :1
-# ==============================================================================
 
 from setuptools import setup, find_packages
 
